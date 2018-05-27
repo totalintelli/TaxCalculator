@@ -34,5 +34,20 @@ namespace TaxCalculatorTest
             // Assert
             Assert.That(salaryResulted, Is.EqualTo(salaryExpected));
         }
+
+        [TestCase(TaxYear.Year2013)]
+        [TestCase(TaxYear.Year2014)]
+        public void WhenSalaryIsZero_ShouldReturnZero(TaxYear taxYear)
+        {
+            // Arrange
+            var taxHelper = new TaxHelper(taxYear);
+            const int salaryExpected = 0;
+
+            // Act
+            var salaryResulted = taxHelper.Calculate(0);
+
+            // Assert
+            Assert.That(salaryResulted, Is.EqualTo(salaryExpected));
+        }
     }
 }
