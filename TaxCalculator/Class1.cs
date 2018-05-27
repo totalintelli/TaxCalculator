@@ -17,28 +17,45 @@ namespace TaxCalculator
     public class TaxHelper
     {
         private readonly TaxYear _taxYear;
+        private readonly ITaxRepository _taxRepo;
 
-        public TaxHelper(TaxYear taxYear)
+        public TaxHelper(TaxYear taxYear, ITaxRepository taxRepo)
         {
             this._taxYear = taxYear;
+            this._taxRepo = taxRepo;
         }
 
         public decimal Calculate(decimal salary)
         {
             // To Do : 2013 = 10%, 2014 = 20%
-            int taxRate = 0;
-            switch (_taxYear)
-            {
-                case TaxYear.Year2013:
-                    taxRate = 10;
-                    break;
-                case TaxYear.Year2014:
-                    taxRate = 20;
-                    break;
-                default:
-                    throw new ArgumentException();
-            }
+            int taxRate = _taxRepo.GetTaxRate(_taxYear);
             return salary * (100 - taxRate) / 100;
         }
     }
+
+    public interface ITaxRepository
+    {
+        int GetTaxRate(TaxYear taxYear);
+    }
+
+    // 세금 비율을 DB에 저장해서 연도 별로 가져오도록 수정
+    public class TaxRepository : ITaxRepository
+    {
+        public int GetTaxRate(TaxYear taxYear)
+        {
+            // To Do
+            return -1;
+        }
+    }
+
+    public class StubTaxRepository : ITaxRepository
+    {
+        public int TaxRate { get; set; }
+
+        public int GetTaxRate(TaxYear taxYear)
+        {
+            return TaxRate;
+        }
+    }
+
 }

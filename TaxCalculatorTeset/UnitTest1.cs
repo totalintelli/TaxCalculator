@@ -11,7 +11,9 @@ namespace TaxCalculatorTest
         public void When2013_ShouldRetrun90Percent()
         {
             // Arrange
-            var taxHelper = new TaxHelper(TaxYear.Year2013);
+            var taxRepo = new StubTaxRepository();
+            taxRepo.TaxRate = 10;
+            var taxHelper = new TaxHelper(TaxYear.Year2013, taxRepo);
             const int salaryExpected = 900;
 
             // Act
@@ -25,7 +27,9 @@ namespace TaxCalculatorTest
         public void When2014_ShouldReturn80Percent()
         {
             // Arrange
-            var taxHelper = new TaxHelper(TaxYear.Year2014);
+            var taxRepo = new StubTaxRepository();
+            taxRepo.TaxRate = 20;
+            var taxHelper = new TaxHelper(TaxYear.Year2014, taxRepo);
             const int salaryExpected = 800;
 
             // Aact
@@ -40,7 +44,8 @@ namespace TaxCalculatorTest
         public void WhenSalaryIsZero_ShouldReturnZero(TaxYear taxYear)
         {
             // Arrange
-            var taxHelper = new TaxHelper(taxYear);
+            var taxRepo = new StubTaxRepository();
+            var taxHelper = new TaxHelper(taxYear, taxRepo);
             const int salaryExpected = 0;
 
             // Act
