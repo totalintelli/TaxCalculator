@@ -11,11 +11,12 @@ namespace TaxCalculator
         Year2013,
         Year2014
     }
-    public class TaxCalculator
+
+    public class TaxHelper
     {
         private readonly TaxYear _taxYear;
 
-        public TaxCalculator(TaxYear taxYear)
+        public TaxHelper(TaxYear taxYear)
         {
             this._taxYear = taxYear;
         }
